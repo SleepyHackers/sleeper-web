@@ -40,7 +40,7 @@ addEventListener("load", function() {
 	//label.hide_when = function () { return demo.loading_screen.is_active; };
 	label.innerHTML = "" +
 	    //'<div style="height: 80px; border-bottom: 1px dashed rgb(0, 0, 0); margin-bottom: 5px;">Message box</div>' +
-	    '<div id="chatbox" style="margin-top: 80px; border-top: 1px dashed rgb(0, 0, 0); padding-top: 5px;"><div>$ <span id="chat_input"></span></div></div>';
+	    '<div id="fillbox" style="height:80px; overflow:hidden; margin-bottom:4px;"></div><div id="chatbox" style="border-top: 1px dashed rgb(0, 0, 0); padding-top: 5px;"><div>$ <span id="chat_input"></span></div></div>';
 	label.style.backgroundColor = "rgba(255, 255, 255, 0.4)";
 	label.style.fontSize = "12px";
 	label.style.padding = "4px";
@@ -50,33 +50,6 @@ addEventListener("load", function() {
 	label.style.height = "100px";
 	label.style.width = "230px";
 	//label.style.pointerEvents = "auto"; // restore mouse events
-	
-	label.onload = function(){};
-	label.onkeydown = function(e){
-		if( e.which == 13 )
-		{
-			//window.tar = this;
-			document.getElementById("gl_canvas").focus();
-			//document.getElementById("chatbox")
-			
-			var m = parseInt(document.getElementById("chatbox").style.marginTop);
-			
-			if( (m / 20) >= 0 )
-			{
-				document.getElementById("chatbox").style.marginTop = m - 20;
-			}
-			
-			var msg = document.createElement('div');
-			//msg.style.marginTop =
-			
-			msg.innerHTML = document.getElementById("chatbox").innerHTML;
-			document.getElementById("chatbox").innerHTML = '';
-			
-			document.getElementById("chatbox").appendChild(msg);
-			
-			this.blur();
-		}
-	}
 
     // setup asset search paths
     please.set_search_path("glsl", "glsl/");
@@ -142,8 +115,80 @@ function key_handler(state, key) {
 
         if (key == "enter") {
             //console.log(1234);
-            document.getElementById('chat_input').contentEditable = true;
-            document.getElementById('chat_input').focus();
+            var ci = document.getElementById('chat_input');
+            
+            /*if( ci.contentEditable == 'inherit' )
+            {
+	            console.log('initial IRAN');
+            }*/
+            
+            if( ci.contentEditable != 'true' )
+            {
+	            ci.contentEditable = true;
+	            ci.focus();
+            }
+            else
+            {
+	            ci.contentEditable = false;
+	            
+	            //document.getElementById("chat_input").innerHTML = '';
+	            /*var m = parseInt(document.getElementById("chatbox").style.marginTop);//style.marginTop);
+					console.log('m : ' + m);
+				if( (m / 20 - 1) >= 0 )
+				{
+					document.getElementById("chatbox").style.marginTop = m - 20 + 'px';
+				}*/
+				
+				var msg = document.createElement('div');
+				//msg.style.marginTop =
+				
+				msg.innerHTML = document.getElementById("chat_input").innerHTML;
+				document.getElementById("chat_input").innerHTML = '';
+				
+				var fb = document.getElementById("fillbox");
+				fb.appendChild(msg);
+				fb.scrollTop = fb.scrollHeight
+				
+				//this.blur();
+				//document.getElementById("gl_canvas").focus();
+				
+	            ci.blur();
+            }
+            
+            
+            
+            /*
+            ci.focus();
+            
+            ci.onkeydown = function(e){
+				console.log('IRAN');
+				if( e.which == 13 )
+				{
+					//window.tar = this;
+					//document.getElementById("chatbox")
+					
+					var m = parseInt(document.getElementById("chatbox").style.marginTop);
+					
+					if( (m / 20) >= 0 )
+					{
+						document.getElementById("chatbox").style.marginTop = m - 20;
+					}
+					
+					var msg = document.createElement('div');
+					//msg.style.marginTop =
+					
+					msg.innerHTML = document.getElementById("chatbox").innerHTML;
+					document.getElementById("chatbox").innerHTML = '';
+					
+					document.getElementById("chatbox").appendChild(msg);
+					
+					//this.blur();
+					document.getElementById("gl_canvas").focus();
+				}
+			}//*/
+			
+            
+            
         }
 
         /*key_tracker[key] = {

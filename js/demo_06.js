@@ -40,7 +40,7 @@ addEventListener("load", function() {
 	//label.hide_when = function () { return demo.loading_screen.is_active; };
 	label.innerHTML = "" +
 	    //'<div style="height: 80px; border-bottom: 1px dashed rgb(0, 0, 0); margin-bottom: 5px;">Message box</div>' +
-	    '<div id="chatbox" style="margin-top: 80px; border-top: 1px dashed rgb(0, 0, 0); padding-top: 5px;">$ <span id="chat_input"></span></div>';
+	    '<div id="chatbox" style="margin-top: 80px; border-top: 1px dashed rgb(0, 0, 0); padding-top: 5px;"><div>$ <span id="chat_input"></span></div></div>';
 	label.style.backgroundColor = "rgba(255, 255, 255, 0.4)";
 	label.style.fontSize = "12px";
 	label.style.padding = "4px";
@@ -51,6 +51,32 @@ addEventListener("load", function() {
 	label.style.width = "230px";
 	//label.style.pointerEvents = "auto"; // restore mouse events
 	
+	label.onload = function(){};
+	label.onkeydown = function(e){
+		if( e.which == 13 )
+		{
+			//window.tar = this;
+			document.getElementById("gl_canvas").focus();
+			//document.getElementById("chatbox")
+			
+			var m = parseInt(document.getElementById("chatbox").style.marginTop);
+			
+			if( (m / 20) >= 0 )
+			{
+				document.getElementById("chatbox").style.marginTop = m - 20;
+			}
+			
+			var msg = document.createElement('div');
+			//msg.style.marginTop =
+			
+			msg.innerHTML = document.getElementById("chatbox").innerHTML;
+			document.getElementById("chatbox").innerHTML = '';
+			
+			document.getElementById("chatbox").appendChild(msg);
+			
+			this.blur();
+		}
+	}
 
     // setup asset search paths
     please.set_search_path("glsl", "glsl/");
@@ -77,7 +103,6 @@ addEventListener("load", function() {
 
     show_progress();
 });
-
 
 function show_progress() {
     if (please.media.pending.length > 0) {
@@ -117,8 +142,8 @@ function key_handler(state, key) {
 
         if (key == "enter") {
             //console.log(1234);
-            document.getElementById('text_label').contentEditable = true;
-            document.getElementById('text_label').focus();
+            document.getElementById('chat_input').contentEditable = true;
+            document.getElementById('chat_input').focus();
         }
 
         /*key_tracker[key] = {
@@ -127,6 +152,8 @@ function key_handler(state, key) {
         };*/
     }
 };
+
+please.keys.connect("enter", key_handler);
 
 addEventListener("mgrl_media_ready", function () {
 	//calling the align function to bypass the overlay bug
@@ -246,6 +273,7 @@ addEventListener("mgrl_media_ready", function () {
     
     // connect keyboard handlers
     please.keys.enable();
+    please.keys.connect("enter", key_handler);
     please.keys.connect("enter", key_handler);
     //please.keys.connect("left", key_handler);
     //please.keys.connect("right", key_handler);

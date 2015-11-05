@@ -276,8 +276,10 @@ addEventListener("mgrl_media_ready", function () {
     please.keys.enable();
     please.keys.connect("enter", key_handler);
     please.keys.connect("enter", key_handler);
-    //please.keys.connect("left", key_handler);
-    //please.keys.connect("right", key_handler);
+    please.keys.connect("left", key_handler);
+    please.keys.connect("right", key_handler);
+    please.keys.connect("up", key_handler);
+    please.keys.connect("down", key_handler);
     
     // add a floor
     graph.add(new FloorNode());

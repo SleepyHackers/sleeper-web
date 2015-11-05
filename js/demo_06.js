@@ -129,10 +129,11 @@ function key_handler(state, key) {
 };
 
 addEventListener("mgrl_media_ready", function () {
-	//calling the align function to bypass the overlay bug
-	please.__align_canvas_overlay();
-	
-    // Clear loading screen, show canvas
+    //calling the align function to bypass the overlay bug
+    
+    please.__align_canvas_overlay();
+
+        // Clear loading screen, show canvas
     document.getElementById("loading_screen").style.display = "none";
     document.getElementById("demo_area").style.display = "block";
 
@@ -256,7 +257,7 @@ addEventListener("mgrl_media_ready", function () {
     // add a camera
     var camera = window.camera = new please.CameraNode();
     camera.look_at = vec3.fromValues(0, 0, 1);
-    camera.location = [-3, 12.5, 5.7];
+    camera.location = [-3, 8.5, 5.7];
 
     // add the camera to the scene graph
     graph.add(camera);
@@ -291,7 +292,7 @@ var FloorNode = function () {
     console.assert(this !== window);
     please.GraphNode.call(this);
 
-    this.__vbo = please.gl.make_quad(100, 100);
+    this.__vbo = please.gl.make_quad(200, 200);
     this.__drawable = true;
     this.shader.mode = 1; // "floor mode"
 

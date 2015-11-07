@@ -101,6 +101,10 @@ addEventListener("mgrl_fps", function (event) {
 // keyboard control stuff
 var key_tracker = {
     "enter" : null,
+    "left" : null,
+    "right" : null,
+    "up" : null,
+    "down" : null
 };
 function key_handler(state, key) {
     // arrow key handler
@@ -113,7 +117,19 @@ function key_handler(state, key) {
     else if (state === "press" && key_tracker[key] === null) {
         var start_time = performance.now();
 
-        if (key == "enter") {
+	if (key == "down") {
+	    console.log("OMG");
+	    camera.location = [0, 0, 0];
+	} else if (key == "up") {
+	    console.log("OMG");
+
+	} else if (key == "left") {
+	    console.log("OMG");
+
+	} else if (key == "right") {
+	    console.log("OMG");
+
+	} else if (key == "enter") {
             //console.log(1234);
             var ci = document.getElementById('chat_input');
             
@@ -139,23 +155,21 @@ function key_handler(state, key) {
 					document.getElementById("chatbox").style.marginTop = m - 20 + 'px';
 				}*/
 				
-				var msg = document.createElement('div');
-				//msg.style.marginTop =
-				
-				msg.innerHTML = document.getElementById("chat_input").innerHTML;
-				document.getElementById("chat_input").innerHTML = '';
-				
-				var fb = document.getElementById("fillbox");
-				fb.appendChild(msg);
-				fb.scrollTop = fb.scrollHeight
-				
+		
+		//msg.style.marginTop =
+
+
+		connection.send(document.getElementById("chat_input").innerHTML);		
+		document.getElementById("chat_input").innerHTML = '';
+		
 				//this.blur();
-				//document.getElementById("gl_canvas").focus();
+		//document.getElementById("gl_canvas").focus();
+
 				
 	            ci.blur();
             }
             
-            
+           
             
             /*
             ci.focus();
@@ -317,21 +331,13 @@ addEventListener("mgrl_media_ready", function () {
     //anitest2.actions["Wobble"].repeat = true;
     //anitest2.play("Wobble");
     
-    // connect keyboard handlers
-    please.keys.enable();
-    please.keys.connect("enter", key_handler);
-    please.keys.connect("enter", key_handler);
-    please.keys.connect("left", key_handler);
-    please.keys.connect("right", key_handler);
-    please.keys.connect("up", key_handler);
-    please.keys.connect("down", key_handler);
     
     // add a floor
     graph.add(new FloorNode());
 
     // add a camera
     var camera = window.camera = new please.CameraNode();
-    camera.look_at = vec3.fromValues(0, 0, 1);
+    camera.look_at = vec3.fromValues(0, 1, 1);
     camera.location = [-3, 8.5, 5.7];
 
     // add the camera to the scene graph
@@ -342,6 +348,14 @@ addEventListener("mgrl_media_ready", function () {
     // only one so it doesn't matter, BUT it is generally good
     // practice to activate the camera you want to use before drawing.
     camera.activate();
+
+    // connect keyboard handlers
+    please.keys.enable();
+    please.keys.connect("enter", key_handler);
+    please.keys.connect("left", key_handler);
+    please.keys.connect("right", key_handler);
+    please.keys.connect("up", key_handler);
+    please.keys.connect("down", key_handler);
 
     // set up a directional light
     var light_direction = vec3.fromValues(.25, -1.0, -.4);

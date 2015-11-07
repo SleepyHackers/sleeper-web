@@ -3,8 +3,17 @@ if ('WebSocket' in window){
     var connection = new WebSocket('ws://sleepermud.net:2067');
     connection.onmessage = function(e){
 	var server_message = e.data;
-	console.log(server_message);
+	//	console.log('got: ' + server_message);
+	var msg = document.createElement('div');
+
+	msg.innerHTML = "&lt;annon&gt; " + server_message;
+	
+	var fb = document.getElementById("fillbox");
+	fb.appendChild(msg);
+
+	fb.scrollTop = fb.scrollHeight;
     }
+    
     connection.onerror = function(error){
 	console.log('Error detected: ' + error);
     }
@@ -12,7 +21,7 @@ if ('WebSocket' in window){
     var pinger = function() {
     	var message = "ping";
 	connection.send(message);
-	setTimeout(pinger, 1000);
+//	setTimeout(pinger, 1000);
 	console.log('pinged server!');
     } 
 

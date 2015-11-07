@@ -7,6 +7,9 @@ if ('WebSocket' in window){
 	var msg = document.createElement('div');
 
 	msg.innerHTML = "&lt;annon&gt; " + server_message;
+	msg.style.wordBreak = 'break-all';
+	msg.style.width = '100%';
+
 	
 	var fb = document.getElementById("fillbox");
 	fb.appendChild(msg);

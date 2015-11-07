@@ -143,6 +143,8 @@ function key_handler(state, key) {
 				//msg.style.marginTop =
 				
 				msg.innerHTML = document.getElementById("chat_input").innerHTML;
+				msg.style.wordBreak = 'break-all';
+				msg.style.width = '100%';
 				document.getElementById("chat_input").innerHTML = '';
 				
 				var fb = document.getElementById("fillbox");

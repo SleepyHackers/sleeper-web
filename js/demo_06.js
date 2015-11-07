@@ -155,10 +155,6 @@ function key_handler(state, key) {
 					document.getElementById("chatbox").style.marginTop = m - 20 + 'px';
 				}*/
 				
-		
-		//msg.style.marginTop =
-
-
 		connection.send(document.getElementById("chat_input").innerHTML);		
 		document.getElementById("chat_input").innerHTML = '';
 		

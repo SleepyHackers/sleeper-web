@@ -89,22 +89,8 @@ function chat_handler(state, key) {
 
     if (state === "press" && key_tracker[key] == null) {
 	if (key == "enter") {
-
-            var ci = document.getElementById('chat_input');
-            
-            if( ci.contentEditable != 'true' )
-            {
-	            ci.contentEditable = true;
-	            ci.focus();
-            }
-            else {
-		if(document.getElementById("chat_input").innerHTML.length) connection.send(document.getElementById("chat_input").innerHTML);		
-		document.getElementById("chat_input").innerHTML = '';
-		
-            }
-            
-        }
-	
+	    chat_send();
+	}
     }
 };
 

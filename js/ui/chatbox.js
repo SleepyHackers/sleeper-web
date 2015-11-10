@@ -19,3 +19,15 @@ function build_chatbox() {
 function update_chatbox() {
 
 };
+
+function chat_send(msg) {
+            var ci = document.getElementById('chat_input');
+            
+            if( ci.contentEditable != 'true' ) {
+	        ci.contentEditable = true;
+	        ci.focus();
+            } else {
+		if(document.getElementById("chat_input").innerHTML.length) connection.send(document.getElementById("chat_input").innerHTML);		
+		document.getElementById("chat_input").innerHTML = '';
+	    }
+};

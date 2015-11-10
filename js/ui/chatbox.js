@@ -15,3 +15,7 @@ function build_chatbox() {
 	label.style.width = "330px";
 	//label.style.pointerEvents = "auto"; // restore mouse events
 };
+
+function update_chatbox() {
+
+};

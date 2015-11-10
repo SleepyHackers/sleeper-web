@@ -1,23 +1,7 @@
 "use strict";
 /*
 
- Midnight Graphics & Recreation Library Demos:
-
- This file is the old model loader demo, and will soon be superseeded.
-.
-
- The javascript source code demos provided with M.GRL have been
- dedicated to the by way of CC0.  More information about CC0 is
- available here: https://creativecommons.org/publicdomain/zero/1.0/
-.
-
- Art assets used are under a Creative Commons Attribution - Share
- Alike license or similar (this is explained in detail elsewhere).
- M.GRL itself is made available to you under the LGPL.  M.GRL makes
- use of the glMatrix library, which is some variety of BSD license.
-.
-
- Have a nice day! ^_^
+Based on parts of demo_06.js, CC0 - Public Domain
 
 */
 
@@ -64,7 +48,6 @@ function key_handler(state, key) {
 	    var scale = delta/frequency;
 
 	    var amount = .05;
-
 	    if (key == "down") {
 		window.player.location_y += (amount / frequency) * delta;
 	    } else if (key == "up") {
@@ -109,70 +92,16 @@ function chat_handler(state, key) {
 
             var ci = document.getElementById('chat_input');
             
-            /*if( ci.contentEditable == 'inherit' )
-            {
-	            console.log('initial IRAN');
-            }*/
-            
             if( ci.contentEditable != 'true' )
             {
 	            ci.contentEditable = true;
 	            ci.focus();
             }
-            else
-            {
-
-	            
-	            //document.getElementById("chat_input").innerHTML = '';
-	            /*var m = parseInt(document.getElementById("chatbox").style.marginTop);//style.marginTop);
-					console.log('m : ' + m);
-				if( (m / 20 - 1) >= 0 )
-				{
-					document.getElementById("chatbox").style.marginTop = m - 20 + 'px';
-				}*/
-				
+            else {
 		if(document.getElementById("chat_input").innerHTML.length) connection.send(document.getElementById("chat_input").innerHTML);		
 		document.getElementById("chat_input").innerHTML = '';
 		
-				//this.blur();
-		//document.getElementById("gl_canvas").focus();
-
-
             }
-            
-           
-            
-            /*
-            ci.focus();
-            
-            ci.onkeydown = function(e){
-				console.log('IRAN');
-				if( e.which == 13 )
-				{
-					//window.tar = this;
-					//document.getElementById("chatbox")
-					
-					var m = parseInt(document.getElementById("chatbox").style.marginTop);
-					
-					if( (m / 20) >= 0 )
-					{
-						document.getElementById("chatbox").style.marginTop = m - 20;
-					}
-					
-					var msg = document.createElement('div');
-					//msg.style.marginTop =
-					
-					msg.innerHTML = document.getElementById("chatbox").innerHTML;
-					document.getElementById("chatbox").innerHTML = '';
-					
-					document.getElementById("chatbox").appendChild(msg);
-					
-					//this.blur();
-					document.getElementById("gl_canvas").focus();
-				}
-			}//*/
-			
-            
             
         }
 	
@@ -189,53 +118,14 @@ addEventListener("load", function() {
     // create the rendering context
     please.gl.set_context("gl_canvas");
     
-    //creating a hud object
-    /*please.hud = { canvas:null, context:null };
-    please.hud.canvas = document.getElementById('gl_hud');
-    var hudBitmap = please.hud.context = please.hud.canvas.getContext('2d');
-    
-    hudBitmap.font = "Normal 40px Arial";
-    hudBitmap.textAlign = 'center';
-    hudBitmap.fillStyle = "rgba(245,245,245,0.75)";
-    hudBitmap.fillText('Initializing...', please.hud.canvas.width / 2, please.hud.canvas.height / 2);*/
-
-	var label = please.hud = please.overlay.new_element("text_label");
-	//label.hide_when = function () { return demo.loading_screen.is_active; };
-	label.innerHTML = "" +
-	    //'<div style="height: 80px; border-bottom: 1px dashed rgb(0, 0, 0); margin-bottom: 5px;">Message box</div>' +
-	    '<div id="fillbox" class="chat_display"></div><div id="chatbox" style="border-top: 1px dashed rgb(0, 0, 0); padding-top: 5px;"><div>$ <span id="chat_input" onblur="toggleChatEdit()"></span></div></div>';
-	label.style.backgroundColor = "rgba(255, 255, 255, 0.4)";
-	label.style.fontSize = "12px";
-	label.style.padding = "4px";
-	label.style.borderRadius = "4px";
-	label.style.left = "10px";
-	label.style.bottom = "10px";
-	label.style.height = "200px";
-	label.style.width = "330px";
-	//label.style.pointerEvents = "auto"; // restore mouse events
+    build_chatbox();
 
     // setup asset search paths
     please.set_search_path("glsl", "glsl/");
-    //please.set_search_path("img", "../gl_assets/img/");
-    //please.set_search_path("jta", "../gl_assets/models/");
     
     // load shader sources
     please.load("simple.vert");
     please.load("simple.frag");
-
-    // load our model files
-    //please.load("gavroche.jta");
-    //please.load("floor_lamp.jta");
-    
-    // test model
-    //please.load("graph_test.jta");
-
-    // while not strictly necessary, the progress bar will make more
-    // sense if we manually queue up textures here:
-    /*please.load("uvmap.png");
-    please.load("floor_lamp.png");
-    please.load("mr_squeegee_feet.jta");
-    please.load("anitest2.jta");*/
 
     show_progress();
 });
@@ -277,27 +167,6 @@ addEventListener("mgrl_media_ready", function () {
     // setup opengl state    
     gl.enable(gl.CULL_FACE);
     please.set_clear_color(0.0, 0.0, 0.0, 0.0);
-
-    // enable alpha blending
-    // gl.enable(gl.BLEND);
-    // gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    
-    // access model data
-    /*var gav_model = please.access("gavroche.jta");
-    var lamp_model = please.access("floor_lamp.jta");
-    var test_model = please.access("mr_squeegee_feet.jta");
-    */
-    //var test_model = please.access("graph_test.jta");
-
-    // display licensing meta_data info, where applicable
-    // [gav_model, lamp_model].map(function (scene) {
-    //     var target = document.getElementById("attribution_area");
-    //     target.style.display = "block";
-    //     var div = scene.get_license_html();
-    //     if (div) {
-    //         target.appendChild(div);
-    //     }
-    // });
 
     // build the scene graph
     var graph = window.graph = new please.SceneGraph();

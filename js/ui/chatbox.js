@@ -20,7 +20,7 @@ function update_chatbox() {
 
 };
 
-function chat_send(msg) {
+function chat_send() {
             var ci = document.getElementById('chat_input');
             
             if( ci.contentEditable != 'true' ) {

@@ -203,10 +203,10 @@ addEventListener("mgrl_media_ready", function () {
     please.keys.connect("right", key_handler);
     please.keys.connect("up", key_handler);
     please.keys.connect("down", key_handler);
-    please.keys.connect("w", key_handler);
+/*    please.keys.connect("w", key_handler);
     please.keys.connect("a", key_handler);
     please.keys.connect("s", key_handler);
-    please.keys.connect("d", key_handler);
+    please.keys.connect("d", key_handler); */
 
     // set up a directional light
     var light_direction = vec3.fromValues(.25, -1.0, -.4);

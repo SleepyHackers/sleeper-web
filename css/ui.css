@@ -1,0 +1,6 @@
+.chat_display {
+    height: 180px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin-bottom: 4px;
+}

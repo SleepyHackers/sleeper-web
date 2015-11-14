@@ -1,19 +1,20 @@
 if ('WebSocket' in window){
     /* WebSocket is supported. You can proceed with your code*/
     var connection = new WebSocket('ws://sleepermud.net:2067');
+
+    function websocket_output_handler(handler) {
+	handler();
+    }
+    
     connection.onmessage = function(e){
 	var server_message = e.data;
-	//	console.log('got: ' + server_message);
+//		console.log('got: ' + server_message);
 	var msg = document.createElement('div');
-
-	msg.innerHTML = "&lt;annon&gt; " + server_message;
+	msg.innerHTML = server_message;
 	msg.style.wordBreak = 'break-all';
 	msg.style.width = '100%';
-
-	
 	var fb = document.getElementById("fillbox");
 	fb.appendChild(msg);
-
 	fb.scrollTop = fb.scrollHeight;
     }
     

@@ -49,13 +49,13 @@ function key_handler(state, key) {
 
 	    var amount = .05;
 	    if (key == "down") {
-		window.player.location_y += (amount / frequency) * delta;
-	    } else if (key == "up") {
 		window.player.location_y -= (amount / frequency) * delta;
+	    } else if (key == "up") {
+		window.player.location_y += (amount / frequency) * delta;
 	    } else if (key == "left") {
-		window.player.location_x += (amount / frequency) * delta;
-	    } else if (key == "right") {
 		window.player.location_x -= (amount / frequency) * delta;
+	    } else if (key == "right") {
+		window.player.location_x += (amount / frequency) * delta;
 	    } else if ( key == "w" ) {
 		window.z_offset += (amount / frequency) * delta;
 	    } else if ( key == "s" ) {
@@ -108,10 +108,13 @@ addEventListener("load", function() {
 
     // setup asset search paths
     please.set_search_path("glsl", "glsl/");
+    please.set_search_path("jta", "assets/");
     
     // load shader sources
     please.load("simple.vert");
     please.load("simple.frag");
+
+    please.load("outhouse.jta");
 
     show_progress();
 });
@@ -150,6 +153,7 @@ addEventListener("mgrl_media_ready", function () {
     var prog = please.glsl("default", "simple.vert", "simple.frag");
     prog.activate();
 
+
     // setup opengl state    
     gl.enable(gl.CULL_FACE);
     please.set_clear_color(0.0, 0.0, 0.0, 0.0);
@@ -158,20 +162,35 @@ addEventListener("mgrl_media_ready", function () {
     var graph = window.graph = new please.SceneGraph();
 
     var player = window.player = new please.GraphNode();
-    player.location = [10, 50, 4];
+    player.location = [10, 0, 2];
 
     var focus = window.focus = new please.GraphNode();
+
     
     var x_offset = window.x_offset = 0;
     var z_offset = window.z_offset = 0;
+
     
+    var outhouse_model = please.access("outhouse.jta");
+    
+    var outhouse = outhouse_model.instance();
+
+
+    outhouse.location = [0,3,0];
+//    outhouse.shader.mode = 3
+    
+//    graph.add(outhouse);
+
     focus.location = function() {
 	return [window.player.location_x + window.x_offset,
-	window.player.location_y-10,
+	window.player.location_y + 10,
 	 window.player.location_z - window.z_offset];
     };
 
+
+
     graph.add(player);
+    graph.add(focus);
     //graph.add(focus);
     // add a floor
     graph.add(new FloorNode());
@@ -232,7 +251,7 @@ var FloorNode = function () {
     console.assert(this !== window);
     please.GraphNode.call(this);
 
-    this.__vbo = please.gl.make_quad(1000, 1000);
+    this.__vbo = please.gl.make_quad(100, 100);
     this.__drawable = true;
     this.shader.mode = 1; // "floor mode"
 
